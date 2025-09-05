@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2 } from "lucide-react";
+import { Loader2, Trash } from "lucide-react";
 import { FALLBACK_WORDS } from "@/lib/wordlist";
 
 type LetterState = "correct" | "present" | "absent" | "unknown";
@@ -281,7 +281,8 @@ export default function WordleHelper() {
                       ))}
                     </div>
                     <Button variant="outline" size="sm" onClick={() => removeGuess(guess.id)} className="ml-2">
-                      Remove
+                      <Trash className="md:hidden" />
+                      <span className="hidden md:block">Remove</span>
                     </Button>
                   </div>
                 ))}
