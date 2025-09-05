@@ -1,30 +1,99 @@
-# Wordle helper app
+## Wordle Helper
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+An interactive helper for narrowing down Wordle answers. Enter guesses and toggle each letter's state (correct, present, absent) to filter the dictionary.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/lukeorriss-projects/v0-wordle-helper-app)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/xM36XbWzNTG)
+### Tech Stack
 
-## Overview
+- **Framework**: Next.js 14 (App Router)
+- **UI**: Tailwind CSS, Radix UI, shadcn/ui components
+- **Icons**: lucide-react
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+### Getting Started
 
-## Deployment
+## Run Remotely
 
-Your project is live at:
+1. Visit [https://wordle.orriss.dev](https://wordle.orriss.dev)
 
-**[https://vercel.com/lukeorriss-projects/v0-wordle-helper-app](https://vercel.com/lukeorriss-projects/v0-wordle-helper-app)**
+## Run Locally
 
-## Build your app
+1. Install dependencies:
 
-Continue building your app on:
+```bash
+npm install
+# or
+pnpm install
+```
 
-**[https://v0.app/chat/projects/xM36XbWzNTG](https://v0.app/chat/projects/xM36XbWzNTG)**
+2. Run the dev server:
 
-## How It Works
+```bash
+npm run dev
+```
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+3. Open `http://localhost:3000` in your browser.
+
+### Scripts
+
+- `npm run dev`: Start the Next.js dev server
+- `npm run build`: Create a production build
+- `npm run start`: Start the production server (after build)
+- `npm run lint`: Run Next.js lint
+
+### Project Structure
+
+```
+app/
+  layout.tsx       # App shell
+  page.tsx         # Wordle Helper UI and filtering logic
+components/
+  ui/              # Reusable shadcn/ui wrappers (button, card, input, etc.)
+lib/
+  wordlist.ts      # Fallback 5-letter word list
+public/            # Static assets
+styles/            # Global styles
+```
+
+### How It Works
+
+- Type a 5-letter guess and click Add Guess.
+- Click each letter tile to cycle its state:
+  - Green = correct (right letter, right position)
+  - Yellow = present (right letter, wrong position)
+  - Gray = absent (letter not in solution)
+- Possible words update live below as you mark letters.
+
+### Filtering Logic (Wordle-style)
+
+- Enforces exact letter positions for green tiles.
+- Ensures yellow letters are present in the word but not in that position.
+- Handles repeated letters with per-letter counts:
+  - If a letter is marked present/correct N times in a guess, candidate words must include at least N occurrences (and exactly N when mixed with absent for that letter in the same guess).
+  - Absent letters are excluded globally unless the same guess shows that letter as present/correct elsewhere, in which case it's only banned at that position.
+- Words are normalized to uppercase before checks.
+
+### Dictionary Source
+
+- Tries to fetch a remote 5-letter word list on load.
+- Falls back to `lib/wordlist.ts` if the fetch fails.
+
+### Customization
+
+- Update color tokens in `getLetterStateColor` in `app/page.tsx` to match your preferred palette.
+- Replace or extend the fallback words in `lib/wordlist.ts`.
+
+### Deployment
+
+Any Next.js-compatible platform works (Vercel recommended).
+
+```bash
+npm run build && npm run start
+```
+
+### Troubleshooting
+
+- Empty results after marking letters usually means conflicting constraints. Review your guess states.
+- If the remote dictionary fails to load, the app automatically uses the fallback list.
+
+### License
+
+MIT
