@@ -10,8 +10,7 @@ export const metadata: Metadata = {
     default: "Wordle Helper - Solve Wordle Puzzles with Smart Word Filtering",
     template: "%s | Wordle Helper",
   },
-  description:
-    "Master Wordle with our intelligent helper tool! Enter your guesses, mark letter states, and get filtered word suggestions. Free, fast, and effective for solving 5-letter word puzzles.",
+  description: "Master Wordle with our intelligent helper tool! Enter your guesses, mark letter states, and get filtered word suggestions.",
   keywords: [
     "wordle",
     "wordle helper",
@@ -46,8 +45,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://wordle.orriss.dev",
     title: "Wordle Helper - Solve Wordle Puzzles with Smart Word Filtering",
-    description:
-      "Master Wordle with our intelligent helper tool! Enter your guesses, mark letter states, and get filtered word suggestions. Free, fast, and effective for solving 5-letter word puzzles.",
+    description: "Master Wordle with our intelligent helper tool! Enter your guesses, mark letter states, and get filtered word suggestions.",
     siteName: "Wordle Helper",
     images: [
       {
@@ -61,8 +59,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Wordle Helper - Solve Wordle Puzzles with Smart Word Filtering",
-    description:
-      "Master Wordle with our intelligent helper tool! Enter your guesses, mark letter states, and get filtered word suggestions. Free, fast, and effective for solving 5-letter word puzzles.",
+    description: "Master Wordle with our intelligent helper tool! Enter your guesses, mark letter states, and get filtered word suggestions.",
     images: ["/og-image.png"],
     creator: "@lukeorriss",
   },
