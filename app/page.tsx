@@ -129,12 +129,13 @@ export default function WordleHelper() {
     return filteredWords;
   };
 
-  const addGuess = () => {
-    if (currentGuess.length !== 5) return;
+  const addGuess = (word?: string) => {
+    const guessWord = word || currentGuess;
+    if (guessWord.length !== 5) return;
 
     const newGuess: Guess = {
       id: Date.now().toString(),
-      letters: currentGuess.split("").map((letter) => ({
+      letters: guessWord.split("").map((letter) => ({
         letter: letter.toUpperCase(),
         state: "unknown" as LetterState,
       })),
@@ -250,7 +251,11 @@ export default function WordleHelper() {
                 className="flex-1"
                 maxLength={5}
               />
-              <Button onClick={addGuess} disabled={currentGuess.length !== 5 || guesses.length >= 6} className="bg-slate-900 text-white hover:bg-slate-800 disabled:bg-gray-300 disabled:text-gray-500">
+              <Button
+                onClick={() => addGuess()}
+                disabled={currentGuess.length !== 5 || guesses.length >= 6}
+                className="bg-slate-900 text-white hover:bg-slate-800 disabled:bg-gray-300 disabled:text-gray-500"
+              >
                 Add Guess
               </Button>
             </div>
@@ -304,7 +309,7 @@ export default function WordleHelper() {
                 <p className="text-gray-600 mb-4">Too many possibilities ({possibleWords.length} words). Add more guesses to narrow it down!</p>
                 <div className="flex flex-wrap gap-2">
                   {possibleWords.slice(0, 50).map((word) => (
-                    <Badge key={word} variant="secondary">
+                    <Badge key={word} variant="secondary" className="cursor-pointer hover:bg-slate-300 transition-colors" onClick={() => addGuess(word)}>
                       {word}
                     </Badge>
                   ))}
@@ -314,7 +319,7 @@ export default function WordleHelper() {
             ) : (
               <div className="flex flex-wrap gap-2">
                 {possibleWords.map((word) => (
-                  <Badge key={word} variant="secondary">
+                  <Badge key={word} variant="secondary" className="cursor-pointer hover:bg-slate-300 transition-colors" onClick={() => addGuess(word)}>
                     {word}
                   </Badge>
                 ))}
