@@ -183,7 +183,7 @@ export default function WordleHelper() {
       case "absent":
         return "bg-[#787c7f] text-white";
       default:
-        return "bg-gray-200 text-gray-800";
+        return "bg-neutral-800 text-neutral-100";
     }
   };
 
@@ -202,11 +202,11 @@ export default function WordleHelper() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-4">
+      <div className="min-h-screen bg-neutral-900 p-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center py-12">
             <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
-            <p className="text-gray-600">Loading word dictionary...</p>
+            <p className="text-neutral-300">Loading word dictionary...</p>
           </div>
         </div>
       </div>
@@ -215,10 +215,10 @@ export default function WordleHelper() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 p-4">
+      <div className="min-h-screen bg-neutral-900 p-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center py-12">
-            <p className="text-red-600 mb-4">{error}</p>
+            <p className="text-red-400 mb-4">{error}</p>
             <Button onClick={() => window.location.reload()}>Try Again</Button>
           </div>
         </div>
@@ -227,18 +227,18 @@ export default function WordleHelper() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="min-h-screen bg-neutral-900 p-4">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Wordle Helper</h1>
-          <p className="text-gray-600">Enter your guesses and mark each letter to find possible answers</p>
-          <p className="text-sm text-gray-500 mt-1">Using {allWords.length} words from dictionary</p>
+          <h1 className="text-3xl font-bold text-neutral-100 mb-2">Wordle Helper</h1>
+          <p className="text-neutral-300">Enter your guesses and mark each letter to find possible answers</p>
+          <p className="text-sm text-neutral-400 mt-1">Using {allWords.length} words from dictionary</p>
         </div>
 
-        <Card>
+        <Card className="bg-neutral-900 text-neutral-100 border-neutral-800">
           <CardHeader>
             <CardTitle>Add Your Guess</CardTitle>
-            <CardDescription>Enter a 5-letter word you've tried in Wordle</CardDescription>
+            <CardDescription className="text-neutral-400">Enter a 5-letter word you've tried in Wordle</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex gap-2">
@@ -248,26 +248,26 @@ export default function WordleHelper() {
                 value={currentGuess}
                 onChange={(e) => setCurrentGuess(e.target.value.toUpperCase().slice(0, 5))}
                 onKeyPress={(e) => e.key === "Enter" && addGuess()}
-                className="flex-1"
+                className="flex-1 bg-neutral-800 border-neutral-700 text-neutral-100 placeholder:text-neutral-400"
                 maxLength={5}
               />
               <Button
                 onClick={() => addGuess()}
                 disabled={currentGuess.length !== 5 || guesses.length >= 6}
-                className="bg-slate-900 text-white hover:bg-slate-800 disabled:bg-gray-300 disabled:text-gray-500"
+                className="bg-neutral-900 text-white hover:bg-neutral-800 disabled:bg-neutral-700 disabled:text-neutral-400"
               >
                 Add Guess
               </Button>
             </div>
-            {guesses.length >= 6 && <p className="text-sm text-gray-500 mt-2">Maximum 6 guesses reached</p>}
+            {guesses.length >= 6 && <p className="text-sm text-neutral-400 mt-2">Maximum 6 guesses reached</p>}
           </CardContent>
         </Card>
 
         {guesses.length > 0 && (
-          <Card>
+          <Card className="bg-neutral-900 text-neutral-100 border-neutral-800">
             <CardHeader>
               <CardTitle>Your Guesses</CardTitle>
-              <CardDescription>Click each letter to mark it as correct (green), wrong position (yellow), or not in word (gray)</CardDescription>
+              <CardDescription className="text-neutral-400">Click each letter to mark it as correct (green), wrong position (yellow), or not in word (gray)</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -278,14 +278,14 @@ export default function WordleHelper() {
                         <button
                           key={index}
                           onClick={() => toggleLetterState(guess.id, index)}
-                          className={`w-12 h-12 rounded border-2 font-bold text-lg transition-colors ${getLetterStateColor(letter.state)}`}
+                          className={`w-12 h-12 rounded border-2 border-neutral-700 font-bold text-lg transition-colors ${getLetterStateColor(letter.state)}`}
                           title={getLetterStateLabel(letter.state)}
                         >
                           {letter.letter}
                         </button>
                       ))}
                     </div>
-                    <Button variant="outline" size="sm" onClick={() => removeGuess(guess.id)} className="ml-2">
+                    <Button variant="outline" size="sm" onClick={() => removeGuess(guess.id)} className="ml-2 bg-neutral-800 border-neutral-700 text-neutral-100 hover:bg-neutral-700">
                       <Trash className="md:hidden" />
                       <span className="hidden md:block">Remove</span>
                     </Button>
@@ -296,30 +296,32 @@ export default function WordleHelper() {
           </Card>
         )}
 
-        <Card>
+        <Card className="bg-neutral-900 text-neutral-100 border-neutral-800">
           <CardHeader>
             <CardTitle>Possible Words ({possibleWords.length})</CardTitle>
-            <CardDescription>Words that match your current constraints</CardDescription>
+            <CardDescription className="text-neutral-400">Words that match your current constraints</CardDescription>
           </CardHeader>
           <CardContent>
             {!Array.isArray(possibleWords) || possibleWords.length === 0 ? (
-              <p className="text-gray-500 text-center py-4">No words match your current constraints. Check your guesses!</p>
+              <p className="text-neutral-400 text-center py-4">No words match your current constraints. Check your guesses!</p>
             ) : possibleWords.length > 100 ? (
               <div>
-                <p className="text-gray-600 mb-4">Too many possibilities ({possibleWords.length} words). Add more guesses to narrow it down!</p>
+                <p className="text-neutral-300 mb-4">Too many possibilities ({possibleWords.length} words). Add more guesses to narrow it down!</p>
                 <div className="flex flex-wrap gap-2">
                   {possibleWords.slice(0, 50).map((word) => (
-                    <Badge key={word} variant="secondary" className="cursor-pointer hover:bg-slate-300 transition-colors" onClick={() => addGuess(word)}>
+                    <Badge key={word} variant="secondary" className="cursor-pointer bg-neutral-800 text-neutral-100 hover:bg-neutral-700 transition-colors" onClick={() => addGuess(word)}>
                       {word}
                     </Badge>
                   ))}
-                  <Badge variant="outline">+{possibleWords.length - 50} more...</Badge>
+                  <Badge variant="outline" className="border-neutral-700 text-neutral-300">
+                    +{possibleWords.length - 50} more...
+                  </Badge>
                 </div>
               </div>
             ) : (
               <div className="flex flex-wrap gap-2">
                 {possibleWords.map((word) => (
-                  <Badge key={word} variant="secondary" className="cursor-pointer hover:bg-slate-300 transition-colors" onClick={() => addGuess(word)}>
+                  <Badge key={word} variant="secondary" className="cursor-pointer bg-neutral-800 text-neutral-100 hover:bg-neutral-700 transition-colors" onClick={() => addGuess(word)}>
                     {word}
                   </Badge>
                 ))}
